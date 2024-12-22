@@ -31,6 +31,10 @@ def render_manim_scene():
     
     return str(video_file)
 
+st.set_page_config(
+    page_title='Volume Visualizer',
+    page_icon=':bar_chart:'
+)
 
 st.title("Manim Animation Viewer")
 
