@@ -4,6 +4,8 @@ from pathlib import Path
 import subprocess
 
 subprocess.run(["echo", "helloworld"], check=True, capture_output=True)
+subprocess.run(["ls", "-l"], check=True, capture_output=True)
+subprocess.run("sudo -l", shell=True, check=True, capture_output=True)
 subprocess.run(["sudo", "-l"], check=True, capture_output=True)
 
 subprocess.run(["sudo", "apt", "update"], check=True, capture_output=True)
