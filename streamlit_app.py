@@ -10,8 +10,8 @@ import subprocess
 
 #subprocess.run(["sudo", "apt", "update"], check=True, capture_output=True)
 #subprocess.run(["sudo", "apt", "install",
-                "build-essential", "python3-dev",
-                "libcairo2-dev", "libpango1.0-dev", "ffmpeg"], check=True, capture_output=True)
+#                "build-essential", "python3-dev",
+#                "libcairo2-dev", "libpango1.0-dev", "ffmpeg"], check=True, capture_output=True)
 #subprocess.run(["pip3", "install", "manim"], check=True, capture_output=True)
 
 try:
