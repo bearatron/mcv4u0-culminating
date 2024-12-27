@@ -3,35 +3,21 @@ import os
 from pathlib import Path
 import subprocess
 
-subprocess.run(["echo", "helloworld"], check=True, capture_output=True)
-subprocess.run(["ls", "-l"], check=True, capture_output=True)
-subprocess.run("sudo -l", shell=True, check=True, capture_output=True)
-subprocess.run(["sudo", "-l"], check=True, capture_output=True)
+#subprocess.run(["echo", "helloworld"], check=True, capture_output=True)
+#subprocess.run(["ls", "-l"], check=True, capture_output=True)
+#subprocess.run("sudo -l", shell=True, check=True, capture_output=True)
+#subprocess.run(["sudo", "-l"], check=True, capture_output=True)
 
-subprocess.run(["sudo", "apt", "update"], check=True, capture_output=True)
-subprocess.run(["sudo", "apt", "install",
+#subprocess.run(["sudo", "apt", "update"], check=True, capture_output=True)
+#subprocess.run(["sudo", "apt", "install",
                 "build-essential", "python3-dev",
                 "libcairo2-dev", "libpango1.0-dev", "ffmpeg"], check=True, capture_output=True)
-subprocess.run(["pip3", "install", "manim"], check=True, capture_output=True)
+#subprocess.run(["pip3", "install", "manim"], check=True, capture_output=True)
 
 try:
     import manim
 except ImportError:
     st.write("bruh")
-
-
-def run_shell_command(command):
-    """Run a shell command and return the output."""
-    try:
-        result = subprocess.run(command, shell=True,
-                                text=True, capture_output=True)
-        if result.returncode == 0:
-            return f"Command succeeded:\n{result.stdout}"
-        else:
-            return f"Command failed:\n{result.stderr}"
-    except Exception as e:
-        return f"Error while running command: {e}"
-
 
 class ThreeDCameraIllusionRotation(ThreeDScene):
     def construct(self):
