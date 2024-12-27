@@ -1,8 +1,20 @@
 import streamlit as st
-from manim import *
 import os
 from pathlib import Path
 import subprocess
+
+subprocess.run(["sudo", "apt", "update"], check=True)
+subprocess.run(["sudo", "apt", "install", 
+                "build-essential", "python3-dev", 
+                "libcairo2-dev", "libpango1.0-dev", "ffmpeg"], check=True)
+subprocess.run(["pip3","install","manim"], check=True)
+
+try:
+    import manim
+except ImportError:
+    st.write("bruh")
+
+from manim import *
 
 def run_shell_command(command):
     """Run a shell command and return the output."""
