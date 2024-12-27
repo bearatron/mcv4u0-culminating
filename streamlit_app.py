@@ -2,6 +2,18 @@ import streamlit as st
 from manim import *
 import os
 from pathlib import Path
+import subprocess
+
+def run_shell_command(command):
+    """Run a shell command and return the output."""
+    try:
+        result = subprocess.run(command, shell=True, text=True, capture_output=True)
+        if result.returncode == 0:
+            return f"Command succeeded:\n{result.stdout}"
+        else:
+            return f"Command failed:\n{result.stderr}"
+    except Exception as e:
+        return f"Error while running command: {e}"
 
 class ThreeDCameraIllusionRotation(ThreeDScene):
     def construct(self):
@@ -30,6 +42,9 @@ def render_manim_scene():
         raise FileNotFoundError(f"No video file found in {video_dir}.")
     
     return str(video_file)
+
+run_shell_command("sudo apt update")
+run_shell_command("sudo apt install build-essential python3-dev libcairo2-dev libpango1.0-dev ffmpeg")
 
 st.set_page_config(
     page_title='Volume Visualizer',
