@@ -2,11 +2,15 @@ import math
 from manim import *
 import numpy as np
 
-left_bound = -2
-right_bound = 2
+ROTATION_X_AXIS = 0
+ROTATION_Y_AXIS = 1
+
+lower_bound = -1.5
+upper_bound = 1.5
+rotation = ROTATION_X_AXIS
 
 def f(x):
-    return x**2
+    return x**3
 
 
 class FunctionAnimation(ThreeDScene):
@@ -20,42 +24,123 @@ class FunctionAnimation(ThreeDScene):
             z_length=20,
         ).add_coordinates()
 
-        graph = ImplicitFunction(
-            func=lambda x, y: f(x) - y,
-            x_range=[left_bound, right_bound],
-        )
+        # curve = ImplicitFunction(
+        #     func=lambda x, y: f(x) - y,
+        #     x_range=[lower_bound, upper_bound],
+        # )
 
-        # area = axes.get_area(graph=graph, x_range=)
+        curve_args = {
+            "function": lambda x: f(x),
+            "color": ORANGE,
+        }
 
-        surface = Surface(
-            lambda u, v: axes.c2p(
+        if rotation == ROTATION_X_AXIS:
+            curve_args["x_range"] = [lower_bound, upper_bound]
+        else:
+            # no y_range argument so this throws an error
+            curve_args["y_range"] = [lower_bound, upper_bound]
+
+        curve = axes.plot(**curve_args)
+
+
+        area_args = {
+            "graph": curve,
+            "color": ORANGE,
+        }
+
+        if rotation == ROTATION_X_AXIS:
+            area_args["x_range"] = [lower_bound, upper_bound]
+        else:
+            area_args["y_range"] = [lower_bound, upper_bound]
+
+        # does not work with ImplicitFunction
+        area = axes.get_area(**area_args)
+
+        rotation_group = VGroup(curve, area)
+
+
+        surface_args = {
+            "u_range": [0, 2*PI],
+            "v_range": [lower_bound, upper_bound],
+            "checkerboard_colors": [BLUE_B, BLUE_D],
+        }
+
+        if rotation == ROTATION_X_AXIS:
+            surface_args["func"] = lambda u, v: axes.c2p(
+                v,
+                f(v) * np.cos(u),
+                f(v) * np.sin(u),
+            )
+        else: 
+            surface_args["func"] = lambda u, v: axes.c2p(
                 v * np.cos(u),
                 f(v),
                 v * np.sin(u),
-            ),
-            u_range=[0, 2*PI],
-            v_range=[0, right_bound],
-            checkerboard_colors=[BLUE_B, BLUE_D],
-        )
+            )
+
+
+        surface = Surface(**surface_args)
+
+        # surface = Surface(
+        #     lambda u, v: axes.c2p(
+        #         v * np.cos(u),
+        #         f(v),
+        #         v * np.sin(u),
+        #     ),
+        #     u_range=[0, 2*PI],
+        #     v_range=[0, upper_bound],
+        #     checkerboard_colors=[BLUE_B, BLUE_D],
+        # )
+
+        # surface = Surface(
+        #     lambda u, v: axes.c2p(
+        #         v,
+        #         f(v) * np.cos(u),
+        #         f(v) * np.sin(u),
+        #     ),
+        #     u_range=[0, 2*PI],
+        #     v_range=[lower_bound, upper_bound],
+        #     checkerboard_colors=[BLUE_B, BLUE_D],
+        # )
 
         self.set_camera_orientation(phi=0 * DEGREES, theta=-90 * DEGREES)
         self.add(axes)
-        self.play(Create(graph))
+        self.play(Create(curve), FadeIn(area))
         self.wait()
-        self.move_camera(phi=60 * DEGREES, theta=-40 * DEGREES)
+        # theta -40 deg for rotation around x axis
+        # theta 40 deg for rotation around y axis
+        self.move_camera(phi=60 * DEGREES, theta=-40 * DEGREES, zoom=0.5)
 
-        self.begin_ambient_camera_rotation(rate=PI/10)
+        # self.begin_ambient_camera_rotation(rate=PI/10)
         self.play(
-            Create(surface),
+            Create(
+                surface,
+                lag_ratio=0.8,
+                run_time=1
+            ),
             Rotate(
-                graph,
+                rotation_group,
                 angle=2 * PI,
-                axis=UP,
+                axis=RIGHT,
                 about_point=axes.c2p(0,0,0),
+                run_time=1
             )
         )
-        self.stop_ambient_camera_rotation()
-
+        # self.play(
+        #     Create(
+        #         surface,
+        #         lag_ratio=0.8,
+        #         run_time=1
+        #     ),
+        #     Rotate(
+        #         curve,
+        #         angle=-2 * PI, # rotation towards the left to match surface
+        #         axis=UP,
+        #         about_point=axes.c2p(0,0,0),
+        #         run_time=1
+        #     )
+        # )
+        # self.stop_ambient_camera_rotation()
         self.wait()
 
         # self.begin_3dillusion_camera_rotation(rate=2)
