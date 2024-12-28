@@ -2,7 +2,6 @@ import math
 from manim import *
 import numpy as np
 
-# bounds unused for now
 left_bound = -2
 right_bound = 2
 
@@ -13,16 +12,17 @@ def f(x):
 class FunctionAnimation(ThreeDScene):
     def construct(self):
         axes = ThreeDAxes(
-            x_range=[-6, 6, 1],
-            y_range=[-6, 6, 1],
-            z_range=[-6, 6, 1],
-            x_length=8,
-            y_length=6,
-            z_length=6,
+            x_range=[-10, 10, 2],
+            y_range=[-10, 10, 2],
+            z_range=[-10, 10, 2],
+            x_length=20,
+            y_length=20,
+            z_length=20,
         ).add_coordinates()
 
         graph = ImplicitFunction(
-            lambda x, y: f(x) - y,
+            func=lambda x, y: f(x) - y,
+            x_range=[left_bound, right_bound],
         )
 
         # area = axes.get_area(graph=graph, x_range=)
@@ -34,7 +34,7 @@ class FunctionAnimation(ThreeDScene):
                 v * np.sin(u),
             ),
             u_range=[0, 2*PI],
-            v_range=[0, 3],
+            v_range=[0, right_bound],
             checkerboard_colors=[BLUE_B, BLUE_D],
         )
 
