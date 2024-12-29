@@ -2,7 +2,7 @@
 
 An app that teaches users via animation how to calculate the volume of a solid created by revolving a function about an axis.
 
-[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://gdp-dashboard-template.streamlit.app/)
+[![Open in Streamlit](https://static.streamlit.io/badges/streamlit_badge_black_white.svg)](https://volume-visualizer.streamlit.app/)
 
 ### How to run it on your own machine
 
