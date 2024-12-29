@@ -1,6 +1,7 @@
 import streamlit as st
 import os
 from pathlib import Path
+from manim import *
 import subprocess
 
 #subprocess.run(["echo", "helloworld"], check=True, capture_output=True)
@@ -14,10 +15,10 @@ import subprocess
 #                "libcairo2-dev", "libpango1.0-dev", "ffmpeg"], check=True, capture_output=True)
 #subprocess.run(["pip3", "install", "manim"], check=True, capture_output=True)
 
-try:
-    import manim
-except ImportError:
-    st.write("bruh")
+#try:
+#    import manim
+#except ImportError:
+#    st.write("bruh")
 
 class ThreeDCameraIllusionRotation(ThreeDScene):
     def construct(self):
@@ -31,7 +32,7 @@ class ThreeDCameraIllusionRotation(ThreeDScene):
 
 
 def render_manim_scene():
-    from manim import config
+#    from manim import config
     from pathlib import Path
 
     config.media_dir = "./media"
